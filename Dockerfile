@@ -24,6 +24,7 @@ FROM python:3.14-slim
 # basic network inspection toolkit expected by local LAN/debugging tasks.
 # gosu lets the entrypoint drop privileges cleanly so signals still reach
 # uvicorn directly (no extra shell layer like `su`/`sudo` would add).
+# Lean 4 deps for the built-in Lean MCP server (formal verification harness).
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     cmake \
@@ -47,6 +48,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxcb1 \
     libmagic1 \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Lean 4 via elan (Lean version manager) for the built-in Lean MCP server.
+# This provides `lean`, `lake`, and the Lean toolchain for formal verification.
+ARG LEAN_TOOLCHAIN=leanprover/lean4:v4.23.0
+RUN curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain "${LEAN_TOOLCHAIN}" \
+    && ln -s /root/.elan/bin/lean /usr/local/bin/lean \
+    && ln -s /root/.elan/bin/lake /usr/local/bin/lake \
+    && ln -s /root/.elan/bin/leanpkg /usr/local/bin/leanpkg
+ENV PATH="/root/.elan/bin:${PATH}"
 
 # Private browser automation wrapper used by the native `private_browser` tool.
 # Chromium is installed above, so agent-browser can drive the existing browser

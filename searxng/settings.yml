@@ -1,0 +1,9 @@
+use_default_settings: true
+
+server:
+  secret_key: "sZHAsS1VFO1a7cdzMZTLOP0x57iWhlK9RFbSZMoy3Wba6KLQGJ09B4TwbFbfXhEu"
+
+search:
+  formats:
+    - html
+    - json
