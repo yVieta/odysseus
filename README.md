@@ -22,6 +22,8 @@
 </p>
 
 ---
+## Quick Note
+This repo has extensions and patches for [`open-testing-agents`](https://github.com/yVieta/testing-the-agentic-stack_open-testing-agents)
 
 ## Quick Start
 
