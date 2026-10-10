@@ -23,6 +23,9 @@ requirements.lock
 # also cannot enter image build layers.
 secrets.env.*
 !secrets.env.example
+searxng/settings.yml
+secrets/credentials.env
+.admin_password_hash
 
 # Data — all user data stays local
 data/
